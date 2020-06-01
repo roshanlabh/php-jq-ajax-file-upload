@@ -1,0 +1,90 @@
+
+
+<!DOCTYPE html>
+<html>
+   <head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+     
+      <title>upload</title>
+      
+      <link href="css/main.css" rel="stylesheet" media="all">
+   </head>
+   <body>
+
+<script>
+/* attach a submit handler to the form */
+    $("#formoid").submit(function(event) {
+
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get the action attribute from the <form action=""> element */
+      var $form = $( this ),
+          url = $form.attr( 'action' );
+
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url, { name: $('#name').val(), name2: $('#name2').val() } );
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+        alert('success');
+      });
+    });
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
+
+<form  action="uploadToServer.php" method="POST" enctype="multipart/form-data">>
+      <div class="page-wrapper bg-dark p-t-100 p-b-50">
+         <div class="wrapper wrapper--w900">
+            <div class="card card-6">
+               <div class="card-heading">
+                  <h2 class="title">Upload your file here</h2>
+               </div>
+               <div class="card-body">
+                  
+                     <div class="form-row">
+                        <div class="name">Enter PC No (digits only)</div>
+                        <div class="value">
+                           <input autocomplete="off" class="input--style-6" type="text" maxlength="4"  id="pcNo" pattern="\d{4}" onkeypress="return isNumber(event)" required name="pc_number">
+                        </div>
+                     </div>
+                     
+                    
+                   <div class="form-row">
+                        <div class="name">Upload file</div>
+                        <div class="value">
+                           <div class="input-group js-input-file">
+
+                              <input class="input-file" type="file" name="file" id="file" required>
+                              <label class="label--file" for="file">Choose file</label>
+                              <span class="input-file__info">No file chosen</span>
+                           </div>
+                           <div class="label--desc">Upload your downloaded file.</div>
+                        </div>
+                     </div>
+                  
+               </div>
+               <div class="card-footer">
+                  <button class="btn btn--radius-2 btn--blue-2" id="submitbtn" type="submit">Upload</button>
+               </div>
+            </div>
+         </div>
+      </div>
+</form>
+      <!-- Jquery JS-->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <!-- Main JS-->
+      <script src="js/global.js"></script>
+   </body>
+   
+</html>
+
+

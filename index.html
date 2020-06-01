@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+
+    <title>upload</title>
+
+    <link href="css/main.css" rel="stylesheet" media="all" />
+  </head>
+  <body>
+    <script>
+      function uploadfile() {
+        var pcNo = $("#pcNo").val(); //To save file with this name
+        var file_data = $("#file").prop("files")[0]; //Fetch the file
+        var form_data = new FormData();
+        form_data.append("pcNo", pcNo);
+        form_data.append("file_data", file_data);
+        //   e.preventDefault();
+        //Ajax to send file to upload
+        $.ajax({
+          url: "uploadToServer.php",
+          type: "POST",
+          dataType: "json",
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          // headers: { "Access-Control-Allow-Origin": "*" },
+          success: function (dat2) {
+            if (dat2 == 1) {
+              alert("Successful");
+            } else {
+              alert("Unable to Upload");
+            }
+          },
+        });
+      }
+
+      function isNumber(evt) {
+        evt = evt ? evt : window.event;
+        var charCode = evt.which ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          return false;
+        }
+        return true;
+      }
+    </script>
+
+    <div class="page-wrapper bg-dark p-t-100 p-b-50">
+      <div class="wrapper wrapper--w900">
+        <div class="card card-6">
+          <div class="card-heading">
+            <h2 class="title">Upload your file here</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="name">Enter PC No (digits only)</div>
+              <div class="value">
+                <input
+                  autocomplete="off"
+                  class="input--style-6"
+                  type="text"
+                  maxlength="4"
+                  id="pcNo"
+                  pattern="\d{4}"
+                  onkeypress="return isNumber(event)"
+                  required
+                  name="pc_number"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="name">Upload file</div>
+              <div class="value">
+                <div class="input-group js-input-file">
+                  <input
+                    class="input-file"
+                    type="file"
+                    name="file"
+                    id="file"
+                    required
+                  />
+                  <label class="label--file" for="file">Choose file</label>
+                  <span class="input-file__info">No file chosen</span>
+                </div>
+                <div class="label--desc">Upload your downloaded file.</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button
+              class="btn btn--radius-2 btn--blue-2"
+              id="submitbtn"
+              onclick="uploadfile()"
+              type="submit"
+            >
+              Upload
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Jquery JS-->
+    <script src="js/jquery.min.js"></script>
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
+  </body>
+</html>
